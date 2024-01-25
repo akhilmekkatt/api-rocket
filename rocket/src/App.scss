@@ -1,0 +1,32 @@
+/* The following line can be included in a src/App.scss */
+@import "~bootstrap/scss/bootstrap";
+
+.header-container {
+  display: flex;
+  align-items: center;
+  color: #2e3192;
+}
+.api-response {
+  margin-top: 2rem;
+  background-color: #e2e2e2;
+  color: #525b72;
+  border-radius: 0.5rem;
+  box-shadow: 0px 1px 1px #0000001f inset;
+  padding: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.api-form {
+  .url-form {
+    .input-group {
+      .form-select {
+        background-color: #e7ebf3;
+        box-shadow: 0px 1px 1px #0000001f inset;
+      }
+      .form-control {
+        background-color: #e7ebf3;
+        box-shadow: 0px 1px 1px #0000001f inset;
+      }
+    }
+  }
+}

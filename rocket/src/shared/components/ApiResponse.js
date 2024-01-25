@@ -3,8 +3,9 @@ import React from "react";
 
 const ApiResponse = ({ response }) => {
   return (
-    <div>
-      <h2>API Response</h2>
+    <div className="api-response">
+      <h5>API Response</h5>
+      <br />
       {response ? (
         <pre>{JSON.stringify(response, null, 2)}</pre>
       ) : (

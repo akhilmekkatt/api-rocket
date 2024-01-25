@@ -1,6 +1,11 @@
 // ApiForm.js
 import React, { useState } from "react";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import { Row, Button } from "react-bootstrap";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 
 const ApiForm = ({ setApiResponse }) => {
   const [method, setMethod] = useState("GET");
@@ -55,69 +60,97 @@ const ApiForm = ({ setApiResponse }) => {
   };
 
   return (
-    <div>
-      <label>
-        Method:
-        <select value={method} onChange={handleMethodChange}>
-          <option value="GET">GET</option>
-          <option value="POST">POST</option>
-          <option value="PUT">PUT</option>
-          <option value="DELETE">DELETE</option>
-        </select>
-      </label>
-      <br />
-      <label>
-        URL:
-        <input
-          type="text"
-          value={url}
-          onChange={handleUrlChange}
-          placeholder="Enter URL"
-        />
-      </label>
-      <br />
-      {method === "POST" && (
-        <div>
-          <label>
-            Request Body:
-            <textarea
+    <div className="api-form">
+      <Row className="mb-3">
+        <InputGroup className="url-form">
+          <Form.Select
+            size="md"
+            className="w-5"
+            placeholder="Method"
+            aria-label="Default select example"
+            id="basic-addon1"
+            value={method}
+            onChange={handleMethodChange}
+          >
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+          </Form.Select>
+          <Form.Control
+            size="md"
+            className="w-50"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            type="text"
+            value={url}
+            onChange={handleUrlChange}
+            placeholder="Enter URL"
+          />
+          <Button size="md" variant="primary" onClick={handleSendRequest}>
+            Send
+          </Button>
+        </InputGroup>
+      </Row>
+
+      <Tabs
+        defaultActiveKey="headers"
+        id="uncontrolled-tab-example"
+        className="mb-3"
+      >
+        <Tab eventKey="headers" title="Headers">
+          {headers.map((header, index) => (
+            <InputGroup key={index} className="mb-1">
+              <Form.Control
+                size="sm"
+                value={header.key}
+                aria-label="Key"
+                aria-describedby="basic-addon1"
+                type="text"
+                onChange={(e) => handleHeaderChange(index, "key", e)}
+                placeholder="Key"
+              />
+              <Form.Control
+                size="sm"
+                aria-label="Key"
+                aria-describedby="basic-addon1"
+                type="text"
+                value={header.value}
+                onChange={(e) => handleHeaderChange(index, "value", e)}
+                placeholder="Value"
+              />
+              <Button
+                size="sm"
+                variant="outline-secondary"
+                onClick={() => handleRemoveHeader(index)}
+              >
+                Remove
+              </Button>
+            </InputGroup>
+          ))}
+          <Button
+            size="sm"
+            variant="outline-secondary"
+            onClick={handleAddHeader}
+          >
+            Add Header
+          </Button>
+        </Tab>
+        <Tab eventKey="body" title="Body">
+          {method === "POST" && (
+            <Form.Control
+              as="textarea"
+              rows={3}
               value={body}
               onChange={handleBodyChange}
               placeholder="Enter JSON body"
             />
-          </label>
-          <br />
-        </div>
-      )}
-      <div>
-        <h4>Headers:</h4>
-        {headers.map((header, index) => (
-          <div key={index}>
-            <label>
-              Key:
-              <input
-                type="text"
-                value={header.key}
-                onChange={(e) => handleHeaderChange(index, "key", e)}
-                placeholder="Header Key"
-              />
-            </label>
-            <label>
-              Value:
-              <input
-                type="text"
-                value={header.value}
-                onChange={(e) => handleHeaderChange(index, "value", e)}
-                placeholder="Header Value"
-              />
-            </label>
-            <button onClick={() => handleRemoveHeader(index)}>Remove</button>
-          </div>
-        ))}
-        <button onClick={handleAddHeader}>Add Header</button>
-      </div>
-      <br />
-      <button onClick={handleSendRequest}>Send Request</button>
+          )}
+        </Tab>
+        <Tab eventKey="contact" title="Authorization" disabled>
+          Tab content for Contact
+        </Tab>
+      </Tabs>
     </div>
   );
 };
