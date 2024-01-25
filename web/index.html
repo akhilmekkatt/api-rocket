@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Tester</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      button {
+        padding: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>API Tester</h1>
+    <button id="sendRequestButton">Send API Request</button>
+    <div id="responseContainer"></div>
+
+    <script>
+      const vscode = acquireVsCodeApi();
+
+      document
+        .getElementById("sendRequestButton")
+        .addEventListener("click", async () => {
+          try {
+            // You can customize this URL or use user input
+            const apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
+            const response = await fetch(apiUrl);
+            const responseData = await response.json();
+
+            document.getElementById("responseContainer").innerText =
+              JSON.stringify(responseData, null, 2);
+          } catch (error) {
+            document.getElementById(
+              "responseContainer"
+            ).innerText = `Error: ${error.message}`;
+          }
+        });
+    </script>
+  </body>
+</html>
